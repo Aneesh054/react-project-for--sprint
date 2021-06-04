@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import {
   deleteEmployeeAction,
+  getAllEmployeeAction,
   updateRefEmployee,
 } from "../redux/EmployeeReducer";
 
@@ -14,16 +15,23 @@ export function EmployeeList() {
 
   const [successOperation, setSuccessOperation] = useState(false);
 
+  // Used to Initialize :: READ THE DATA FROM API
+  useEffect(() => {
+    dispatch(getAllEmployeeAction());
+  }, []);
+
   const deleteEmployee = (item, index) => {
-    dispatch(deleteEmployeeAction(index));
+    dispatch(deleteEmployeeAction(item));
 
     setSuccessOperation(true);
     setTimeout(() => setSuccessOperation(false), 2000);
   };
 
   const updateEmployee = (item) => {
+    // we are doing this so that we can access this objec in the form page
     dispatch(updateRefEmployee(item));
 
+    // form page
     history.push("/create-employee");
   };
 
@@ -51,10 +59,10 @@ export function EmployeeList() {
           <tbody>
             {[...state.employee.list].map((item, index) => (
               <tr key={index}>
-                <th scope="row">{index + 1}</th>
+                <th scope="row">{item.id}</th>
                 <td>{item.userName}</td>
-                <td>{item.password}</td>
-                <td>{item.email}</td>
+                <td>{"********"}</td>
+                <td>{"****@gmail.com"}</td>
                 <td>{item.mobile}</td>
                 <td>
                   <input
