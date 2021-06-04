@@ -4,8 +4,10 @@ import { useHistory } from "react-router";
 import {
   deleteEmployeeAction,
   getAllEmployeeAction,
+  getByIdEmployeeAction,
   updateRefEmployee,
 } from "../redux/EmployeeReducer";
+import { EmployeeModal } from "./EmployeeModal";
 
 export function EmployeeList() {
   const state = useSelector((state) => state);
@@ -35,56 +37,72 @@ export function EmployeeList() {
     history.push("/create-employee");
   };
 
+  const getEmployeeById = (item) => {
+    dispatch(getByIdEmployeeAction(item));
+  };
+
   return (
-    <div className="row">
-      <div className="col-3 col-md-2 d-none d-md-block"></div>
-      <div className="col-12 col-md-8">
-        <h3 className="alert alert-secondary">User List</h3>
+    <>
+      <div className="row">
+        <div className="col-3 col-md-2 d-none d-md-block"></div>
+        <div className="col-12 col-md-8">
+          <h3 className="alert alert-secondary">Employee List</h3>
 
-        {successOperation && (
-          <div className="alert alert-success">User Details Added</div>
-        )}
+          {successOperation && (
+            <div className="alert alert-success">Opeation Success</div>
+          )}
 
-        <table className="table">
-          <thead className="thead-dark">
-            <tr>
-              <th scope="col">#ID</th>
-              <th scope="col">USERNAME</th>
-              <th scope="col">PASSWORD</th>
-              <th scope="col">EMAIL</th>
-              <th scope="col">MOBILE</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[...state.employee.list].map((item, index) => (
-              <tr key={index}>
-                <th scope="row">{item.id}</th>
-                <td>{item.userName}</td>
-                <td>{"********"}</td>
-                <td>{"****@gmail.com"}</td>
-                <td>{item.mobile}</td>
-                <td>
-                  <input
-                    type="button"
-                    onClick={() => updateEmployee(item)}
-                    value="Edit"
-                    className="btn btn-link"
-                  />{" "}
-                  /
-                  <input
-                    type="button"
-                    value="Delete"
-                    onClick={() => deleteEmployee(item, index)}
-                    className="btn btn-link text-danger"
-                  />
-                </td>
+          <table className="table">
+            <thead className="thead-dark">
+              <tr>
+                <th scope="col">#ID</th>
+                <th scope="col">USERNAME</th>
+                <th scope="col">PASSWORD</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">MOBILE</th>
+                <th scope="col">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {[...state.employee.list].map((item, index) => (
+                <tr key={index}>
+                  <th scope="row">{item.id}</th>
+                  <td>{item.userName}</td>
+                  <td>{"********"}</td>
+                  <td>{"****@gmail.com"}</td>
+                  <td>{item.mobile}</td>
+                  <td>
+                    <input
+                      type="button"
+                      onClick={() => getEmployeeById(item)}
+                      value="Detail"
+                      className="btn btn-link"
+                    />
+                    /
+                    <input
+                      type="button"
+                      onClick={() => updateEmployee(item)}
+                      value="Edit"
+                      className="btn btn-link"
+                    />
+                    /
+                    <input
+                      type="button"
+                      value="Delete"
+                      onClick={() => deleteEmployee(item, index)}
+                      className="btn btn-link text-danger"
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="col-3 col-md-2 d-none d-md-block"></div>
       </div>
-      <div className="col-3 col-md-2 d-none d-md-block"></div>
-    </div>
+
+      {/** EMPLOYEE MODAL */}
+      <EmployeeModal />
+    </>
   );
 }

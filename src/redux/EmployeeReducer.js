@@ -2,7 +2,7 @@ const initState = {
   list: [],
 
   refemp: {},
-  
+  sampleList: ["Delhi", "Kolkata", "Chennai", "Mumbai"],
 };
 
 // ACTION TYPES
@@ -86,7 +86,15 @@ export function getAllEmployeeAction(payload) {
 }
 
 export function getByIdEmployeeAction(payload) {
-  return { type: EMPLOYEE_GET_BY_ID, payload: payload };
+  // return { type: EMPLOYEE_GET_BY_ID, payload: payload };
+  return async (dispatch) => {
+    const url = `http://localhost:8080/api/employee/${payload.id}`;
+    const response = await fetch(url);
+    const employeeObj = await response.json();
+
+    // this wil update the refemp
+    dispatch(updateRefEmployee(employeeObj));
+  };
 }
 
 export function updateRefEmployee(payload) {

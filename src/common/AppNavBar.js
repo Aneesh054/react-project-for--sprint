@@ -5,16 +5,16 @@ export function AppNavBar() {
   return (
     <Navbar bg="dark" expand="lg" variant="dark">
       <Navbar.Brand as={Link} to="/">
-        USER DETAILS
+        EMS APP
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
           <Nav.Link as={Link} to="/create-employee">
-            Create User
+            Create Employee
           </Nav.Link>
           <Nav.Link as={Link} to="/list-employee">
-            List Users
+            List Employee
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>
