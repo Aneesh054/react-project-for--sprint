@@ -88,12 +88,12 @@ export function EmployeeUpsert() {
       <div className="col-3 col-md-3 d-none d-md-block"></div>
       <div className="col-12 col-md-6">
         <h3 className="alert alert-secondary">
-          {state.employee.refemp.id ? "Update Employee" : "Create Employee"}
+          {state.employee.refemp.id ? "Update User" : "Create User"}
         </h3>
 
         {/** BELOW THESE TWO TAGS MUST BE CONDITIOANL */}
         {successOperation && (
-          <div className="alert alert-success">Opeation Success</div>
+          <div className="alert alert-success">User Details Added</div>
         )}
 
         <div className="mb-1">
@@ -168,7 +168,7 @@ export function EmployeeUpsert() {
             <input
               type="button"
               className="btn btn-secondary w-100"
-              value="Add Employee"
+              value="Add User"
               onClick={(e) => addEmployee(e)}
             />
           )}
