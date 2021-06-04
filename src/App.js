@@ -1,21 +1,26 @@
 import logo from "./logo.svg";
-import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { AppNavBar } from "./common/AppNavBar";
+import "./App.css";
+import { EmployeeUpsert } from "./components/EmployeeUpsert";
 import { EmployeeList } from "./components/EmployeeList";
-import { Employeeupsert } from "./components/EmployeeUpsert";
+import { Nav, Navbar } from "react-bootstrap";
+import { AppNavBar } from "./common/AppNavBar";
+
 function App() {
   return (
     <Router>
-      <AppNavBar/>
+      <AppNavBar />
+
       <Switch>
-        <Route path="create-employee">
-          <Employeeupsert />
+        <Route path="/create-employee">
+          <EmployeeUpsert />
         </Route>
+
         <Route path="/list-employee">
           <EmployeeList />
         </Route>
-        <Route path="/">
+
+        <Route exact path="/">
           <EmployeeList />
         </Route>
       </Switch>
