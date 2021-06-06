@@ -1,27 +1,27 @@
 const initState = {
   list: [],
 
-  refemp: {},
-  sampleList: ["Delhi", "Kolkata", "Chennai", "Mumbai"],
+  refuser: {},
+  
 };
 
 // ACTION TYPES
-const EMPLOYEE_CREATE = "EMPLOYEE_CREATE";
-const EMPLOYEE_UPDATE = "EMPLOYEE_UPDATE";
-const EMPLOYEE_DELETE = "EMPLOYEE_DELETE";
-const EMPLOYEE_GET_ALL = "EMPLOYEE_GET_ALL";
-const EMPLOYEE_GET_BY_ID = "EMPLOYEE_GET_BY_ID";
+const USER_CREATE = "USER_CREATE";
+const USER_UPDATE = "USER_UPDATE";
+const USER_DELETE = "USER_DELETE";
+const USER_GET_ALL = "USER_GET_ALL";
+const USER_GET_BY_ID = "USER_GET_BY_ID";
 
-const REF_EMPLOYEE = "REF_EMPLOYEE";
+const REF_USER= "REF_USER";
 
 // ACTIONS :: COmponents are interacting with this action
-export function createEmployeeAction(payload) {
+export function createUserAction(payload) {
   // return { type: EMPLOYEE_CREATE, payload: payload };
 
   // MAKE SURE redux-thunk is installed.
   return async (dispatch) => {
     // WE HV TO CALL THE SPRINT1 / SPRING BOOT
-    const url = "http://localhost:8080/api/employee/";
+    const url = "http://localhost:8080/api/user/";
     const requestBody = { ...payload, age: 30 };
 
     // HTTP Client
@@ -32,15 +32,15 @@ export function createEmployeeAction(payload) {
     });
 
     // UPDATE THE UI
-    dispatch({ type: EMPLOYEE_CREATE, payload: payload });
+    dispatch({ type: USER_CREATE, payload: payload });
   };
 }
 
-export function updateEmployeeAction(payload) {
+export function updateUserAction(payload) {
   // return { type: EMPLOYEE_UPDATE, payload: payload };
   return async (dispatch) => {
     // WE HV TO CALL THE SPRINT1 / SPRING BOOT
-    const url = `http://localhost:8080/api/employee/${payload.id}`;
+    const url = `http://localhost:8080/api/user/${payload.id}`;
     const requestBody = { ...payload, age: 25 };
 
     await fetch(url, {
@@ -50,80 +50,80 @@ export function updateEmployeeAction(payload) {
     });
 
     // update the ui.
-    dispatch(updateRefEmployee({}));
+    dispatch(updateRefUser({}));
   };
 }
 
-export function deleteEmployeeAction(payload) {
+export function deleteUserAction(payload) {
   // return { type: EMPLOYEE_DELETE, payload: payload };
 
   // redux thunk
   return async (dispatch) => {
-    const url = `http://localhost:8080/api/employee/${payload.id}`;
+    const url = `http://localhost:8080/api/user/${payload.id}`;
     await fetch(url, { method: "DELETE" });
 
     // update the ui.
-    dispatch(getAllEmployeeAction());
+    dispatch(getAllUserAction());
   };
 }
 
-export function getAllEmployeeAction(payload) {
+export function getAllUserAction(payload) {
   // return { type: EMPLOYEE_GET_ALL, payload: payload };
 
   // API CALL/BACKEND CALL / REDUX-THUNK IS THERE
   return async (dispatch) => {
     // WE HV TO CALL THE SPRINT1 / SPRING BOOT
-    const url = "http://localhost:8080/api/employee/";
+    const url = "http://localhost:8080/api/user/";
 
     // HTTP Client / POSTMAN / SWAGGER
     const response = await fetch(url);
-    const employeList = await response.json();
-    console.log(employeList);
+    const userList = await response.json();
+    console.log(userList);
 
     // Update the UI
-    dispatch({ type: EMPLOYEE_GET_ALL, payload: employeList });
+    dispatch({ type: USER_GET_ALL, payload: userList });
   };
 }
 
-export function getByIdEmployeeAction(payload) {
+export function getByIdUserAction(payload) {
   // return { type: EMPLOYEE_GET_BY_ID, payload: payload };
   return async (dispatch) => {
-    const url = `http://localhost:8080/api/employee/${payload.id}`;
+    const url = `http://localhost:8080/api/user/${payload.id}`;
     const response = await fetch(url);
-    const employeeObj = await response.json();
+    const userObj = await response.json();
 
     // this wil update the refemp
-    dispatch(updateRefEmployee(employeeObj));
+    dispatch(updateRefUser(userObj));
   };
 }
 
-export function updateRefEmployee(payload) {
-  return { type: REF_EMPLOYEE, payload: payload };
+export function updateRefUser(payload) {
+  return { type: REF_USER, payload: payload };
 }
 
 // REDUCER LOGIC
-export function EmployeeReducer(state = initState, action) {
+export function UserReducer(state = initState, action) {
   switch (action.type) {
-    case EMPLOYEE_CREATE:
+    case USER_CREATE:
       return { ...state, list: [action.payload, ...state.list] };
-    case EMPLOYEE_UPDATE:
+    case USER_UPDATE:
       // TODO
       return state;
-    case EMPLOYEE_DELETE:
+    case USER_DELETE:
       // TODO
       const oldList = state.list;
       oldList.splice(action.payload, 1);
       console.log("OL", oldList);
 
       return { ...state, list: [...oldList] };
-    case EMPLOYEE_GET_ALL:
+    case USER_GET_ALL:
       // Update the list
       return { ...state, list: action.payload };
-    case EMPLOYEE_GET_BY_ID:
+    case USER_GET_BY_ID:
       // TODO
       return state;
 
-    case REF_EMPLOYEE:
+    case REF_USER:
       return { ...state, refemp: action.payload };
 
     default:

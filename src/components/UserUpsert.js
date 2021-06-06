@@ -1,23 +1,20 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import {
-  createEmployeeAction,
-  updateEmployeeAction,
-} from "../redux/EmployeeReducer";
+import { createUserAction, updateUserAction } from "../redux/UserReducer";
 
-export function EmployeeUpsert() {
+export function UserUpsert() {
   const dispatch = useDispatch();
   const history = useHistory();
   const state = useSelector((state) => state);
   console.log(state);
 
-  const [firstName, setFirstName] = useState(state.employee.refemp.firstName);
-  const [lastName, setLastName] = useState(state.employee.refemp.lastName);
-  const [userName, setUserName] = useState(state.employee.refemp.userName);
-  const [password, setPassword] = useState(state.employee.refemp.password);
-  const [email, setEmail] = useState(state.employee.refemp.email);
-  const [mobile, setMobile] = useState(state.employee.refemp.mobile);
+  const [firstName, setFirstName] = useState(state.user.refuser.firstName);
+  const [lastName, setLastName] = useState(state.user.refuser.lastName);
+  const [userName, setUserName] = useState(state.user.refuser.userName);
+  const [password, setPassword] = useState(state.user.refuser.password);
+  const [email, setEmail] = useState(state.user.refuser.email);
+  const [mobile, setMobile] = useState(state.user.refuser.mobile);
 
   const [successOperation, setSuccessOperation] = useState(false);
   const [errorOperation, setErrorOperation] = useState(false);
@@ -29,13 +26,13 @@ export function EmployeeUpsert() {
   const updateEmail = (e) => setEmail(e.target.value);
   const updateMobile = (e) => setMobile(e.target.value);
 
-  const addEmployee = (e) => {
+  const addUser = (e) => {
     e.preventDefault();
     console.log(firstName, lastName, userName, password, email, mobile);
 
     // THIS IS REDUX ACTION CALLING
     dispatch(
-      createEmployeeAction({
+      createUserAction({
         firstName,
         lastName,
         userName,
@@ -61,10 +58,10 @@ export function EmployeeUpsert() {
     setMobile("");
   };
 
-  const updateEmployee = () => {
+  const updateUser = () => {
     dispatch(
-      updateEmployeeAction({
-        id: state.employee.refemp.id,
+      updateUserAction({
+        id: state.user.refuser.id,
         firstName,
         lastName,
         userName,
@@ -88,7 +85,7 @@ export function EmployeeUpsert() {
       <div className="col-3 col-md-3 d-none d-md-block"></div>
       <div className="col-12 col-md-6">
         <h3 className="alert alert-secondary">
-          {state.employee.refemp.id ? "Update Employee" : "Create Employee"}
+          {state.user.refuser.id ? "Update User" : "Create User"}
         </h3>
 
         {/** BELOW THESE TWO TAGS MUST BE CONDITIOANL */}
@@ -157,19 +154,19 @@ export function EmployeeUpsert() {
         </div>
 
         <div className="mb-1">
-          {state.employee.refemp.id ? (
+          {state.employee.refuser.id ? (
             <input
               type="button"
               className="btn btn-secondary w-100"
-              value="Update Employee"
-              onClick={() => updateEmployee()}
+              value="Update user"
+              onClick={() => updateUser()}
             />
           ) : (
             <input
               type="button"
               className="btn btn-secondary w-100"
-              value="Add Employee"
-              onClick={(e) => addEmployee(e)}
+              value="Add user"
+              onClick={(e) => addUser(e)}
             />
           )}
         </div>

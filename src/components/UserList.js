@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import {
-  deleteEmployeeAction,
-  getAllEmployeeAction,
-  getByIdEmployeeAction,
-  updateRefEmployee,
-} from "../redux/EmployeeReducer";
-import { EmployeeModal } from "./EmployeeModal";
+  deleteUserAction,
+  getAllUserAction,
+  getByIdUserAction,
+  updateRefUser,
+} from "../redux/UserReducer";
+import { UserModal } from "./UserModal";
 
-export function EmployeeList() {
+export function UserList() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -19,26 +19,26 @@ export function EmployeeList() {
 
   // Used to Initialize :: READ THE DATA FROM API
   useEffect(() => {
-    dispatch(getAllEmployeeAction());
+    dispatch(getAllUserAction());
   }, []);
 
-  const deleteEmployee = (item, index) => {
-    dispatch(deleteEmployeeAction(item));
+  const deleteUser = (item, index) => {
+    dispatch(deleteUserAction(item));
 
     setSuccessOperation(true);
     setTimeout(() => setSuccessOperation(false), 2000);
   };
 
-  const updateEmployee = (item) => {
+  const updateUser = (item) => {
     // we are doing this so that we can access this objec in the form page
-    dispatch(updateRefEmployee(item));
+    dispatch(updateRefUser(item));
 
     // form page
-    history.push("/create-employee");
+    history.push("/create-user");
   };
 
-  const getEmployeeById = (item) => {
-    dispatch(getByIdEmployeeAction(item));
+  const getUserById = (item) => {
+    dispatch(getByIdUserAction(item));
   };
 
   return (
@@ -46,7 +46,7 @@ export function EmployeeList() {
       <div className="row">
         <div className="col-3 col-md-2 d-none d-md-block"></div>
         <div className="col-12 col-md-8">
-          <h3 className="alert alert-secondary">Employee List</h3>
+          <h3 className="alert alert-secondary">User List</h3>
 
           {successOperation && (
             <div className="alert alert-success">Opeation Success</div>
@@ -60,11 +60,12 @@ export function EmployeeList() {
                 <th scope="col">PASSWORD</th>
                 <th scope="col">EMAIL</th>
                 <th scope="col">MOBILE</th>
-                <th scope="col">Actions</th>
+              
+                <th scope="col">ACTIONS</th>
               </tr>
             </thead>
             <tbody>
-              {[...state.employee.list].map((item, index) => (
+              {[...state.user.list].map((item, index) => (
                 <tr key={index}>
                   <th scope="row">{item.id}</th>
                   <td>{item.userName}</td>
@@ -74,14 +75,14 @@ export function EmployeeList() {
                   <td>
                     <input
                       type="button"
-                      onClick={() => getEmployeeById(item)}
+                      onClick={() => getUserById(item)}
                       value="Detail"
                       className="btn btn-link"
                     />
                     /
                     <input
                       type="button"
-                      onClick={() => updateEmployee(item)}
+                      onClick={() => updateUser(item)}
                       value="Edit"
                       className="btn btn-link"
                     />
@@ -89,7 +90,7 @@ export function EmployeeList() {
                     <input
                       type="button"
                       value="Delete"
-                      onClick={() => deleteEmployee(item, index)}
+                      onClick={() => deleteUser(item, index)}
                       className="btn btn-link text-danger"
                     />
                   </td>
@@ -102,7 +103,7 @@ export function EmployeeList() {
       </div>
 
       {/** EMPLOYEE MODAL */}
-      <EmployeeModal />
+      <UserModal />
     </>
   );
 }
